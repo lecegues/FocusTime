@@ -12,4 +12,14 @@ body{
     min-height: 700px;
 
     border: 1px solid black;
+
+    /* Animations */
+    transition: transform 0.7s ease;
 }
+
+#start{
+    
+    /* Animations */
+    transition: opacity 0.3s ease;
+}
+
