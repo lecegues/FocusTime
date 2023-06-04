@@ -1,0 +1,15 @@
+:root {
+    --bs-body-font-family: 'Montserrat', sans-serif;
+
+}
+
+body{
+    background-color: white;
+
+}
+
+.middle-box{
+    min-height: 700px;
+
+    border: 1px solid black;
+}
