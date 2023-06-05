@@ -2,7 +2,7 @@
 
 ## Introducing FocusTime: Boost Your Productivity and Stay Focused!
 
-<!--![FocusTime Logo](https://example.com/focustime_logo.png) -->
+![](img/focustime.png)
 
 FocusTime is a powerful productivity tool designed to help individuals enhance their focus and optimize their time management. With its intuitive interface and feature-rich functionality, FocusTime empowers users to stay on track, eliminate distractions, and achieve their goals efficiently. Whether you're a student, professional, or anyone seeking improved productivity, FocusTime is your ultimate companion.
 
