@@ -117,30 +117,8 @@ function onPlayerStateChange(event){
 /* ----------------- Normal Functions ----------------- */ 
 document.addEventListener('DOMContentLoaded', () => {
 
-    //  Get the middle-box container and the button
-    var startButton = document.getElementById('start');
-    var middleBox = document.getElementById('middle-box-container');
-    var playerContainer = document.getElementById('player-container');
-
-    // after pressing start
-    startButton.addEventListener('click', function() {
-        middleBox.style.transform = 'translateX(-100%)';
-        startButton.style.opacity = '0';
-        playerContainer.style.display ='block';
-        
-        
-        // initiate youtube player
-        initializePlayer();
-
-        // start the timer
-        startTimer();
-        
-      });
-
-
-    // dropdown event listeners
-    // Get the dropdown items
-    var dropdownItems = document.getElementsByClassName("dropdown-item");
+    /* -- Automatic Dropdown Menu Update -- */
+    var dropdownItems = document.getElementsByClassName("dropdown-item"); // get dropdown items
 
     // Add click event listeners to the dropdown items
     for (var i = 0; i < dropdownItems.length; i++) {
@@ -153,66 +131,185 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update the selected option display
         document.getElementById("selectedOptionText").textContent = selectedOption;
+        
     });
     }
 
-    // Set up timer
-    var timerInterval;
-    var totalSeconds = 0;
+    //  Get the middle-box container and the button
+    var startButton = document.getElementById('start');
+    var middleBox = document.getElementById('middle-box-container');
+    var playerContainer = document.getElementById('player-container');
+
+    /* -- Start Button is Pressed --*/ 
+    startButton.addEventListener('click', function() {
+        middleBox.style.transform = 'translateX(-100%)';
+        startButton.style.opacity = '0';
+        playerContainer.style.display ='block';
+        
+        // initiate youtube player
+        initializePlayer();
+
+        // disable music preference as well
+        var musicButton = document.getElementById('musicDropdown');
+        musicButton.disabled = true;
+
+        // start the timer
+        getTimerValues();
+        
+      });
+
+    /* ------- Set up timer ------- */
+    var timerInterval, breakTimerInterval;
+    var sessionTotalSeconds, workTotalSeconds, breakTotalSeconds = 0;
+    var originalWorkTotalSeconds,originalBreakSeconds;
+    var isPaused = false;
+    var remainingSeconds = 0;
+
+    function getTimerValues(){
+        // Get the session duration inputs
+        var sessionHoursInput = document.getElementById('session-hours');
+        var sessionMinutesInput = document.getElementById('session-minutes');
+        var sessionSecondsInput = document.getElementById('session-seconds');
+
+        // Get the work duration inputs
+        var workHoursInput = document.getElementById('work-hours');
+        var workMinutesInput = document.getElementById('work-minutes');
+        var workSecondsInput = document.getElementById('work-seconds');
+
+        // Get the break duration inputs
+        var breakHoursInput = document.getElementById('break-hours');
+        var breakMinutesInput = document.getElementById('break-minutes');
+        var breakSecondsInput = document.getElementById('break-seconds');
+
+        // TODO function to calculate duration in seconds
+        // Calculate the total session duration in seconds
+        var sessionHours = parseInt(sessionHoursInput.value) || 0;
+        var sessionMinutes = parseInt(sessionMinutesInput.value) || 0;
+        var sessionSeconds = parseInt(sessionSecondsInput.value) || 0;
+        sessionTotalSeconds = (sessionHours * 3600) + (sessionMinutes * 60) + sessionSeconds;
+
+        // Calculate the work duration in seconds
+        var workHours = parseInt(workHoursInput.value) || 0;
+        var workMinutes = parseInt(workMinutesInput.value) || 0;
+        var workSeconds = parseInt(workSecondsInput.value) || 0;
+        workTotalSeconds = (workHours * 3600) + (workMinutes * 60) + workSeconds;
+        originalWorkTotalSeconds = workTotalSeconds;
+
+        // Calculate the break duration in seconds
+        var breakHours = parseInt(breakHoursInput.value) || 0;
+        var breakMinutes = parseInt(breakMinutesInput.value) || 0;
+        var breakSeconds = parseInt(breakSecondsInput.value) || 0;
+        breakTotalSeconds = (breakHours * 3600) + (breakMinutes * 60) + breakSeconds;
+        originalBreakSeconds = breakTotalSeconds;
+        
+        // Disable the session duration inputs, work duration inputs, 
+        sessionHoursInput.disabled = true;
+        sessionMinutesInput.disabled = true;
+        sessionSecondsInput.disabled = true;
+        workHoursInput.disabled = true;
+        workMinutesInput.disabled = true;
+        workSecondsInput.disabled = true;
+        breakHoursInput.disabled = true;
+        breakMinutesInput.disabled = true;
+        breakSecondsInput.disabled = true;
+
+        startTimer();
+
+    }
 
     function startTimer() {
-        // Get the session duration inputs
-        var hoursInput = document.getElementById('session-hours');
-        var minutesInput = document.getElementById('session-minutes');
-        var secondsInput = document.getElementById('session-seconds');
-
-        // Calculate the total session duration in seconds
-        var hours = parseInt(hoursInput.value) || 0;
-        var minutes = parseInt(minutesInput.value) || 0;
-        var seconds = parseInt(secondsInput.value) || 0;
-        totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
-
         // Display the initial timer value
         updateTimerDisplay();
 
-        // Disable the session duration inputs
-        hoursInput.disabled = true;
-        minutesInput.disabled = true;
-        secondsInput.disabled = true;
+        // Timer starts -- put check functions while timer is going in here
+        timerInterval = setInterval( function() {
 
-        // Start the timer interval
-        timerInterval = setInterval(function() {
-        // Decrease the total seconds by 1
-        totalSeconds--;
+            if (isPaused){
+                return; // function does nothing if paused
+            }
 
-        // Update the timer display
-        updateTimerDisplay();
+            // Decrease seconds by 1
+            sessionTotalSeconds--;
+            workTotalSeconds--;
+        
+            // Update the timer display
+            updateTimerDisplay();
 
-        // Stop the timer when it reaches 0
-        if (totalSeconds <= 0) {
-            stopTimer();
-        }
+            // Check if 0: stop the timer
+            if (sessionTotalSeconds <= 0 || workTotalSeconds <= 0) {
+  
+                // Break Timer shows up
+                startBreak();
+                // reset workTotalSeconds
+                workTotalSeconds = originalWorkTotalSeconds;
+
+
+            }
+
         }, 1000);
     }
 
     function stopTimer() {
+
+        // TODO keep the timer value
+        isPaused = true;
         clearInterval(timerInterval);
+        remainingSeconds = sessionTotalSeconds;
+    }
+
+    function resumeTimer(){
+        clearInterval(breakTimerInterval);
+        isPaused = false;
+        sessionTotalSeconds = remainingSeconds;
+        startTimer();
+
     }
 
     function updateTimerDisplay() {
-        var hours = Math.floor(totalSeconds / 3600);
-        var minutes = Math.floor((totalSeconds % 3600) / 60);
-        var seconds = totalSeconds % 60;
+        var hours = Math.floor(sessionTotalSeconds / 3600);
+        var minutes = Math.floor((sessionTotalSeconds % 3600) / 60);
+        var seconds = sessionTotalSeconds % 60;
 
         // Format the timer value as HH:MM:SS
         var formattedTime = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
 
         // Update the timer display element
         document.getElementById('timer-display').textContent = formattedTime;
+
+        // do the same with the break timer value
+        hours = Math.floor(breakTotalSeconds / 3600);
+        minutes = Math.floor((breakTotalSeconds % 3600) / 60);
+        seconds = breakTotalSeconds % 60;
+
+        formattedTime = formatTime(hours) + ':' + formatTime(minutes) + ':' + formatTime(seconds);
+        document.getElementById('break-display').textContent = formattedTime;
     }
 
     function formatTime(value) {
         return value.toString().padStart(2, '0');
+    }
+
+    /**
+     * Function that will start the break timer
+     */
+    function startBreak(){
+        stopTimer();
+        breakTotalSeconds = originalBreakSeconds;
+
+        breakTimerInterval = setInterval( function() {
+
+            // need to start the break timer:
+            breakTotalSeconds--;
+
+            if (breakTotalSeconds <= 0){
+                resumeTimer();
+            }
+            
+            // display initial timer value
+            updateTimerDisplay();
+
+        }, 1000);
+        
     }
 
 });

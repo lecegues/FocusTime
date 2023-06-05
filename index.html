@@ -37,9 +37,9 @@
             <!-- Session Duration --> <!-- TODO fix variable names -->
             <label class="form-label">Session Duration</label>
             <div class="input-group">
-                <input type="text" id="session-hours" aria-label="First name" class="form-control" placeholder="Hours">
-                <input type="text" id="session-minutes" aria-label="First name" class="form-control" placeholder="Minutes">
-                <input type="text" id="session-seconds" aria-label="First name" class="form-control" placeholder="Seconds">
+                <input type="text" id="session-hours" aria-label="Session Hours" class="form-control" placeholder="Hours">
+                <input type="text" id="session-minutes" aria-label="Session Minutes" class="form-control" placeholder="Minutes">
+                <input type="text" id="session-seconds" aria-label="Session Seconds" class="form-control" placeholder="Seconds">
 
             </div>
             <div class="form-text mb-5" id="basic-addon4"> This describes how long the session is in general.</div>
@@ -47,20 +47,19 @@
             <!-- Work Duration -->
             <label class="form-label">Work Duration</label>
             <div class="input-group">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Hours">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Minutes">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Seconds">
+                <input type="text" id="work-hours" aria-label="Work Hours" class="form-control" placeholder="Hours">
+                <input type="text" id="work-minutes" aria-label="Work Minutes" class="form-control" placeholder="Minutes">
+                <input type="text" id="work-seconds" aria-label="Work Seconds" class="form-control" placeholder="Seconds">
 
             </div>
             <div class="form-text mb-5" id="basic-addon4"> This describes how long you will work for before taking a break.</div>
 
             <!-- Break Duration -->
-            <!-- Work Duration -->
             <label class="form-label">Break Duration</label>
             <div class="input-group">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Hours">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Minutes">
-                <input type="text" aria-label="First name" class="form-control" placeholder="Seconds">
+                <input type="text" id="break-hours" aria-label="First name" class="form-control" placeholder="Hours">
+                <input type="text" id="break-minutes" aria-label="First name" class="form-control" placeholder="Minutes">
+                <input type="text" id="break-seconds" aria-label="First name" class="form-control" placeholder="Seconds">
 
             </div>
             <div class="form-text mb-5" id="basic-addon4"> This describes how long you will work for before taking a break.</div>
@@ -94,6 +93,7 @@
             </div>
 
             <span id="timer-display"> 00:00:00 </span>
+            <h5 class="pt-5" style="font-weight: 300;"> <strong> Break Timer: </strong> <span id="break-display"> 00:00:00 </span></h1>
            
 
         </div>
