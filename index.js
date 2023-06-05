@@ -5,7 +5,7 @@ gapi.load('client',initYoutubeAPI);
 // Initialize Youtube API Client
 function initYoutubeAPI(){
     gapi.client.init({
-        apiKey: 'AIzaSyBa-ycTgrwwaZDcSBATnpF6Ps3g68AytGM',
+        apiKey: 'insertKey', //insert API Key
         discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'],
         }).then(function() {
             // API Initialization succesful
