@@ -13,3 +13,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 });
+
+
+/** Youtube API Backend
+ *  1. Obtain what user chose in dropdown menu
+ *  2. Search for keywords on youtube sorted by popularity and 2+ hour long filter depending on what they chose
+ *          - Classical Music: Classical Music (2+ hour)
+ *          - Piano: BigRicePiano (2+ Hours)
+ *          - Lofi: Lofi Music
+ * 
+ */
