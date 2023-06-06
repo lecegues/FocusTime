@@ -6,6 +6,12 @@
 
 FocusTime is a powerful productivity tool designed to help individuals enhance their focus and optimize their time management. With its intuitive interface and feature-rich functionality, FocusTime empowers users to stay on track, eliminate distractions, and achieve their goals efficiently. Whether you're a student, professional, or anyone seeking improved productivity, FocusTime is your ultimate companion.
 
+> This project was developed as part of the "HackLah!" 12-hour hackathon.
+
+### HackLah! 12-Hour Hackathon Project
+
+During the "HackLah!" hackathon, I worked on creating FocusTime from scratch. Within the 12-hour time constraint, I came up with the idea to match the competition specifications, designed the UI using Figma, and implemented both the frontend and backend for the website.
+
 ### Key Features:
 
 1. **Task Tracking and Management**: FocusTime provides a user-friendly task management system that allows you to organize your activities effectively. Create tasks, set priorities, and track progress effortlessly.
